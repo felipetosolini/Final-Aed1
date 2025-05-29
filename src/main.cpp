@@ -1,13 +1,13 @@
 /* 
  * main.cpp
  * 
- * Este archivo contiene la función main y el menú principal del sistema.
- * Implementa la interfaz de usuario y la lógica de ejecución del programa.
+ * Este archivo contiene la funcion main y el menu principal del sistema.
+ * Implementa la interfaz de usuario y la logica de ejecucion del programa.
  * 
  * Aplica:
  * - Manejo de excepciones: Try-catch para errores
  * - Persistencia: Carga y guardado de datos
- * - Interfaz de usuario: Menú interactivo
+ * - Interfaz de usuario: Menu interactivo
  */
 
 #include <iostream>
@@ -22,18 +22,18 @@
 using namespace std;
 
 void mostrarMenuPrincipal() {
-    cout << "\n=== SISTEMA DE GESTIÓN DE COLECCIONES DIGITALES ===\n";
-    cout << "1. Iniciar sesión\n";
+    cout << "\n=== SISTEMA DE GESTION DE COLECCIONES DIGITALES ===\n";
+    cout << "1. Iniciar sesion\n";
     cout << "2. Registrar nuevo usuario\n";
     cout << "3. Salir\n";
-    cout << "Seleccione una opción: ";
+    cout << "Seleccione una opcion: ";
 }
 
 void mostrarMenuUsuario(shared_ptr<Usuario> usuario) {
-    cout << "\n=== MENÚ DE USUARIO ===\n";
+    cout << "\n=== MENU DE USUARIO ===\n";
     cout << "Usuario: " << usuario->getNombre() << "\n";
     cout << "1. Buscar por autor\n";
-    cout << "2. Buscar por año\n";
+    cout << "2. Buscar por ano\n";
     
     if (usuario->puedeInsertar()) {
         cout << "3. Insertar recurso\n";
@@ -45,8 +45,8 @@ void mostrarMenuUsuario(shared_ptr<Usuario> usuario) {
         cout << "5. Modificar recurso\n";
     }
     
-    cout << "6. Cerrar sesión\n";
-    cout << "Seleccione una opción: ";
+    cout << "6. Cerrar sesion\n";
+    cout << "Seleccione una opcion: ";
 }
 
 shared_ptr<RecursoDigital> crearRecurso() {
@@ -59,14 +59,14 @@ shared_ptr<RecursoDigital> crearRecurso() {
     cout << "ID: ";
     cin >> id;
     
-    cout << "Título: ";
+    cout << "Titulo: ";
     cin.ignore();
     getline(cin, titulo);
     
     cout << "Autor: ";
     getline(cin, autor);
     
-    cout << "Año: ";
+    cout << "Ano: ";
     cin >> anio;
     
     if (tipo == "libro") {
@@ -78,7 +78,7 @@ shared_ptr<RecursoDigital> crearRecurso() {
     }
     else if (tipo == "audio") {
         int duracion;
-        cout << "Duración (segundos): ";
+        cout << "Duracion (segundos): ";
         cin >> duracion;
         return make_shared<Audio>(id, titulo, autor, anio, duracion);
     }
@@ -115,7 +115,7 @@ int main() {
                         usuarioActual = sistema.obtenerUsuario(id);
                         cout << "Bienvenido, " << usuarioActual->getNombre() << "!\n";
                     } else {
-                        cout << "Error de autenticación\n";
+                        cout << "Error de autenticacion\n";
                     }
                     break;
                 }
@@ -148,7 +148,7 @@ int main() {
                 case 3:
                     return 0;
                 default:
-                    cout << "Opción inválida\n";
+                    cout << "Opcion invalida\n";
             }
         } else {
             mostrarMenuUsuario(usuarioActual);
@@ -167,7 +167,7 @@ int main() {
                 }
                 case 2: {
                     int anio;
-                    cout << "Año: ";
+                    cout << "Ano: ";
                     cin >> anio;
                     auto resultados = sistema.buscarPorAnio(anio);
                     cout << "Resultados encontrados: " << resultados.size() << "\n";
@@ -209,10 +209,10 @@ int main() {
                     break;
                 case 6:
                     usuarioActual = nullptr;
-                    cout << "Sesión cerrada\n";
+                    cout << "Sesion cerrada\n";
                     break;
                 default:
-                    cout << "Opción inválida\n";
+                    cout << "Opcion invalida\n";
             }
         }
     }

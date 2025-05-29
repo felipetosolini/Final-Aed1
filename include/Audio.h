@@ -2,7 +2,7 @@
  * Audio.h
  * 
  * Este archivo define la clase Audio que hereda de RecursoDigital.
- * Representa un recurso digital de tipo audio con su atributo específico (duración).
+ * Representa un recurso digital de tipo audio con su atributo especifico (duracion).
  * 
  * Aplica:
  * - Herencia: Hereda de RecursoDigital
@@ -17,17 +17,17 @@
 
 class Audio : public RecursoDigital {
 private:
-    int duracion; // duración en segundos
+    int duracion; // duracion en segundos
 
 public:
     Audio(const string& id, const string& titulo, const string& autor, 
           int anioPublicacion, int duracion);
     
-    // Getters y setters específicos
+    // Getters y setters especificos
     int getDuracion() const { return duracion; }
     void setDuracion(int duracion) { this->duracion = duracion; }
     
-    // Implementación del método virtual
+    // Implementacion del metodo virtual
     string getTipo() const override { return "Audio"; }
 };
 

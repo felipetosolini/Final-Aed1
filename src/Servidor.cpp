@@ -1,5 +1,7 @@
 #include "../include/Servidor.h"
 #include <stdexcept>
+#include <algorithm>
+#include <iterator>
 
 Servidor::Servidor(const string& id) : id(id), activo(true) {}
 

@@ -2,7 +2,7 @@
  * Servidor.h
  * 
  * Este archivo define la clase base Servidor que servirá como interfaz
- * común para los diferentes tipos de servidores del sistema.
+ * comun para los diferentes tipos de servidores del sistema.
  * 
  * Aplica:
  * - Herencia y polimorfismo: Clase base para la jerarquía de servidores

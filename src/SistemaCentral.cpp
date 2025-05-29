@@ -1,6 +1,9 @@
 #include "../include/SistemaCentral.h"
 #include <stdexcept>
 #include <ctime>
+#include <algorithm>
+#include <iterator>
+#include <cstring>
 
 SistemaCentral::SistemaCentral() {
     logFile.open("sistema.log", ios::app);

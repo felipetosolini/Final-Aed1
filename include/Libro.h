@@ -2,7 +2,7 @@
  * Libro.h
  * 
  * Este archivo define la clase Libro que hereda de RecursoDigital.
- * Representa un recurso digital de tipo libro con su atributo específico (editorial).
+ * Representa un recurso digital de tipo libro con su atributo especifico (editorial).
  * 
  * Aplica:
  * - Herencia: Hereda de RecursoDigital
@@ -23,11 +23,11 @@ public:
     Libro(const string& id, const string& titulo, const string& autor, 
           int anioPublicacion, const string& editorial);
     
-    // Getters y setters específicos
+    // Getters y setters especificos
     string getEditorial() const { return editorial; }
     void setEditorial(const string& editorial) { this->editorial = editorial; }
     
-    // Implementación del método virtual
+    // Implementacion del metodo virtual
     string getTipo() const override { return "Libro"; }
 };
 

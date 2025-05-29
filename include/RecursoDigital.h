@@ -2,12 +2,12 @@
  * RecursoDigital.h
  * 
  * Este archivo define la clase base abstracta RecursoDigital que sirve como interfaz
- * común para todos los tipos de recursos digitales (libros, audios y videos).
+ * comun para todos los tipos de recursos digitales (libros, audios y videos).
  * 
  * Aplica:
- * - Herencia y polimorfismo: Clase base para la jerarquía de recursos
+ * - Herencia y polimorfismo: Clase base para la jerarquia de recursos
  * - Encapsulamiento: Atributos protegidos con getters/setters
- * - Constructores y destructores: Implementación de ambos
+ * - Constructores y destructores: Implementacion de ambos
  */
 
 #ifndef RECURSO_DIGITAL_H
@@ -38,7 +38,7 @@ public:
     void setAutor(const string& autor) { this->autor = autor; }
     void setAnioPublicacion(int anio) { this->anioPublicacion = anio; }
 
-    // Método virtual puro para obtener el tipo de recurso
+    // Metodo virtual puro para obtener el tipo de recurso
     virtual string getTipo() const = 0;
 };
 

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <functional>
 using namespace std;
 
 // ------------------ CLASES DE ESTRUCTURAS DE DATOS ------------------
@@ -57,8 +58,8 @@ public:
         cabeza = nuevo;
     }
 
-    // Elimina el último nodo de la lista enlazada
-    // Elimina el último nodo de la lista enlazada y devuelve su valor. Si la lista está vacía, retorna T().
+    // Elimina el ultimo nodo de la lista enlazada
+    // Elimina el ultimo nodo de la lista enlazada y devuelve su valor. Si la lista esta vacia, retorna T().
     T eliminarUltimo() {
         if (cabeza == nullptr) {
             return T();
@@ -81,7 +82,7 @@ public:
         return valor;
     }
 
-    // Elimina el primer nodo de la lista enlazada y devuelve su valor. Si la lista está vacía, retorna T().
+    // Elimina el primer nodo de la lista enlazada y devuelve su valor. Si la lista esta vacia, retorna T().
     T eliminarPrimero() {
         if (cabeza == nullptr) {
             return T();
@@ -299,7 +300,7 @@ class Filon : public Fila<T> {
 public:
     T obtenerMaximo() {
         if (this->estaVacia()) {
-            cout << "La fila está vacía\n";
+            cout << "La fila esta vacia\n";
             return T();
         }
         Fila<T> auxiliar;
@@ -337,7 +338,7 @@ public:
         }
         else
         {
-            cout << "La fila está vacía.\n";
+            cout << "La fila esta vacia.\n";
             return T();
         }
     };
@@ -365,7 +366,7 @@ public:
         if (this->cabeza != nullptr) {
             return this->cabeza;
         } else {
-            cout << "La lista está vacía.\n";
+            cout << "La lista esta vacia.\n";
             return nullptr;
         }
     }
@@ -420,10 +421,10 @@ class ListonDoble : public ListaDobleEnlazada<T> {
                 if (actual->sig != nullptr) {
                     actual->sig->ant = actual->ant;
                 } else {
-                    this->cola = actual->ant; // Actualizar cola si es el último nodo
+                    this->cola = actual->ant; // Actualizar cola si es el ultimo nodo
                 }
                 delete actual;
-                return; // Salir después de eliminar el nodo
+                return; // Salir despues de eliminar el nodo
             }
             actual = actual->sig;
         }
@@ -434,7 +435,7 @@ class ListonDoble : public ListaDobleEnlazada<T> {
         if (this->cabeza != nullptr) {
             return this->cabeza;
         } else {
-            cout << "La lista está vacía.\n";
+            cout << "La lista esta vacia.\n";
             return nullptr;
         }
     }
@@ -509,7 +510,7 @@ public:
         }
         else
         {
-            cout << "La pila está vacía.\n";
+            cout << "La pila esta vacia.\n";
             return T();
         }
     };
@@ -752,7 +753,7 @@ private:
 
         int balance = obtenerBalance(nodo);
 
-        // Rotaciones para balancear el árbol
+        // Rotaciones para balancear el arbol
         if (balance > 1 && valor < nodo->izquierdo->dato) {
             return rotacionDerecha(nodo);
         }
@@ -885,7 +886,7 @@ public:
 
     void bfs() {
         if (raiz == nullptr) {
-            cout << "El árbol está vacío.\n";
+            cout << "El arbol esta vacio.\n";
             return;
         }
 
@@ -1112,7 +1113,7 @@ public:
 
     void bfs() {
         if (raiz == nullptr) {
-            cout << "El árbol está vacío.\n";
+            cout << "El arbol esta vacio.\n";
             return;
         }
 
@@ -1161,8 +1162,8 @@ private:
 
     Nodo* tabla[TAMANIO];
 
-    int hash(const K& clave) const {
-        return hash<K>{}(clave) % TAMANIO;
+    size_t calcularHash(const K& clave) const {
+        return std::hash<K>{}(clave) % TAMANIO;
     }
 
     void liberarMemoria() {
@@ -1190,7 +1191,7 @@ public:
 
     // Inserta una clave con su valor
     void insertar(const K& clave, const V& valor) {
-        int indice = hash(clave);
+        size_t indice = calcularHash(clave);
         Nodo* actual = tabla[indice];
         while (actual != nullptr) {
             if (actual->clave == clave) {
@@ -1204,7 +1205,7 @@ public:
 
     // Elimina una clave existente
     void eliminar(const K& clave) {
-        int indice = hash(clave);
+        size_t indice = calcularHash(clave);
         Nodo* actual = tabla[indice];
         Nodo* anterior = nullptr;
 
@@ -1227,7 +1228,7 @@ public:
 
     // Devuelve el valor asociado a una clave
     V obtener(const K& clave) const {
-        int indice = hash(clave);
+        size_t indice = calcularHash(clave);
         Nodo* actual = tabla[indice];
         while (actual != nullptr) {
             if (actual->clave == clave) {
@@ -1240,7 +1241,7 @@ public:
 
     // Verifica si una clave existe
     bool existe(const K& clave) const {
-        int indice = hash(clave);
+        size_t indice = calcularHash(clave);
         Nodo* actual = tabla[indice];
         while (actual != nullptr) {
             if (actual->clave == clave) {
