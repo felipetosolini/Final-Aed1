@@ -4,6 +4,9 @@
 #include <algorithm>
 #include <iterator>
 #include <cstring>
+#include <sstream>
+#include "../include/Administrador.h"
+#include "../include/Alumno.h"
 
 SistemaCentral::SistemaCentral() {
     logFile.open("sistema.log", ios::app);
@@ -182,7 +185,13 @@ void SistemaCentral::cargarEstado() {
 void SistemaCentral::guardarUsuarios() {
     ofstream archivo("usuarios.txt");
     if (archivo.is_open()) {
-        // Implementar guardado de usuarios
+        // Guardar cada usuario en el formato: tipo|id|nombre|password
+        auto listaUsuarios = usuarios.obtenerValores();
+        for (const auto& usuario : listaUsuarios) {
+            string tipo = std::dynamic_pointer_cast<Administrador>(usuario) ? "admin" : "alumno";
+            archivo << tipo << "|" << usuario->getId() << "|" 
+                   << usuario->getNombre() << "|" << usuario->getPassword() << "\n";
+        }
         archivo.close();
     }
 }
@@ -190,15 +199,56 @@ void SistemaCentral::guardarUsuarios() {
 void SistemaCentral::cargarUsuarios() {
     ifstream archivo("usuarios.txt");
     if (archivo.is_open()) {
-        // Implementar carga de usuarios
+        string linea;
+        while (getline(archivo, linea)) {
+            stringstream ss(linea);
+            string tipo, id, nombre, password;
+            
+            getline(ss, tipo, '|');
+            getline(ss, id, '|');
+            getline(ss, nombre, '|');
+            getline(ss, password, '|');
+            
+            shared_ptr<Usuario> usuario;
+            if (tipo == "admin") {
+                usuario = make_shared<Administrador>(id, nombre, password);
+            } else {
+                usuario = make_shared<Alumno>(id, nombre, password);
+            }
+            usuarios.insertar(id, usuario);
+        }
         archivo.close();
+    }
+    // Si no hay usuarios, crear el administrador predeterminado
+    if (usuarios.vacia()) {
+        auto admin = make_shared<Administrador>("01", "admin", "admin");
+        usuarios.insertar("01", admin);
+        guardarUsuarios(); // Guardar el administrador predeterminado
     }
 }
 
 void SistemaCentral::guardarRecursos() {
     ofstream archivo("recursos.txt");
     if (archivo.is_open()) {
-        // Implementar guardado de recursos
+        for (const auto& servidor : servidores) {
+            for (const auto& recurso : servidor->getRecursos()) {
+                // Guardar cada recurso en el formato: tipo|id|titulo|autor|anio|atributo_especifico
+                archivo << recurso->getTipo() << "|" << recurso->getId() << "|" 
+                       << recurso->getTitulo() << "|" << recurso->getAutor() << "|" 
+                       << recurso->getAnioPublicacion();
+                
+                if (auto libro = dynamic_pointer_cast<Libro>(recurso)) {
+                    archivo << "|" << libro->getEditorial();
+                }
+                else if (auto audio = dynamic_pointer_cast<Audio>(recurso)) {
+                    archivo << "|" << audio->getDuracion();
+                }
+                else if (auto video = dynamic_pointer_cast<Video>(recurso)) {
+                    archivo << "|" << video->getFormato();
+                }
+                archivo << "\n";
+            }
+        }
         archivo.close();
     }
 }
@@ -206,7 +256,41 @@ void SistemaCentral::guardarRecursos() {
 void SistemaCentral::cargarRecursos() {
     ifstream archivo("recursos.txt");
     if (archivo.is_open()) {
-        // Implementar carga de recursos
+        string linea;
+        while (getline(archivo, linea)) {
+            stringstream ss(linea);
+            string tipo, id, titulo, autor, anioStr, atributo;
+            
+            getline(ss, tipo, '|');
+            getline(ss, id, '|');
+            getline(ss, titulo, '|');
+            getline(ss, autor, '|');
+            getline(ss, anioStr, '|');
+            getline(ss, atributo, '|');
+            
+            int anio = stoi(anioStr);
+            shared_ptr<RecursoDigital> recurso;
+            
+            if (tipo == "Libro") {
+                recurso = make_shared<Libro>(id, titulo, autor, anio, atributo);
+            }
+            else if (tipo == "Audio") {
+                int duracion = stoi(atributo);
+                recurso = make_shared<Audio>(id, titulo, autor, anio, duracion);
+            }
+            else if (tipo == "Video") {
+                recurso = make_shared<Video>(id, titulo, autor, anio, atributo);
+            }
+            
+            if (recurso) {
+                for (auto& servidor : servidores) {
+                    if (servidor->puedeAlmacenar(*recurso)) {
+                        servidor->agregarRecurso(recurso);
+                        break;
+                    }
+                }
+            }
+        }
         archivo.close();
     }
 } 

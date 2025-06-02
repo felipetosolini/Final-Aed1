@@ -1,0 +1,2 @@
+alumno|2|Santiago|hola
+admin|01|admin|admin

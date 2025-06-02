@@ -1,5 +1,6 @@
 #include <iostream>
 #include <functional>
+#include <vector>
 using namespace std;
 
 // ------------------ CLASES DE ESTRUCTURAS DE DATOS ------------------
@@ -1261,6 +1262,27 @@ public:
                 actual = actual->siguiente;
             }
         }
+    }
+
+    // NUEVO: Obtener todos los valores
+    std::vector<V> obtenerValores() const {
+        std::vector<V> valores;
+        for (int i = 0; i < TAMANIO; ++i) {
+            Nodo* actual = tabla[i];
+            while (actual != nullptr) {
+                valores.push_back(actual->valor);
+                actual = actual->siguiente;
+            }
+        }
+        return valores;
+    }
+
+    // NUEVO: Saber si la tabla está vacía
+    bool vacia() const {
+        for (int i = 0; i < TAMANIO; ++i) {
+            if (tabla[i] != nullptr) return false;
+        }
+        return true;
     }
 };
 
